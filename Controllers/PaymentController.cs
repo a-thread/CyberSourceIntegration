@@ -1,4 +1,5 @@
 ﻿using CyberSourceIntegration.Services;
+using CyberSourceIntegration.Configurations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CyberSourceIntegration.Controllers
@@ -14,7 +15,7 @@ namespace CyberSourceIntegration.Controllers
             _cyberSourceService = cyberSourceService;
         }
 
-        [HttpPost("create-session")]
+        [HttpGet("create-session")]
         public async Task<IActionResult> CreatePaymentSession()
         {
             try
@@ -29,22 +30,22 @@ namespace CyberSourceIntegration.Controllers
         }
 
         [HttpPost("process-payment")]
-        public async Task<IActionResult> ProcessPayment([FromBody] ProcessPaymentRequest request)
+        public async Task<IActionResult> ProcessPayment([FromBody] PaymentRequest request)
         {
+            if (request == null || string.IsNullOrEmpty(request.TransientToken))
+            {
+                return BadRequest("Invalid payment request.");
+            }
+
             try
             {
-                var transactionId = await _cyberSourceService.ProcessPaymentAsync(request.TransientToken);
-                return Ok(new { transactionId });
+                var result = await _cyberSourceService.ProcessPaymentAsync(request.TransientToken);
+                return Ok(result);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                return BadRequest(new { error = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-    }
-
-    public class ProcessPaymentRequest
-    {
-        public string TransientToken { get; set; } = string.Empty;
     }
 }

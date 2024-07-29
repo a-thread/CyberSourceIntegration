@@ -20,11 +20,11 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins",
-    builder =>
+    policyBuilder =>
     {
-        builder.WithOrigins("http://localhost:4200") // Update with the URL of your Angular app
-               .AllowAnyHeader()
-               .AllowAnyMethod();
+        policyBuilder.WithOrigins("http://localhost:4200") // Update with the URL of your Angular app
+                     .AllowAnyHeader()
+                     .AllowAnyMethod();
     });
 });
 
@@ -37,8 +37,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CyberSourceIntegration v1"));
 }
+else
+{
+    app.UseExceptionHandler("/Home/Error");
+    app.UseHsts(); // Enforce HTTPS in production
+}
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
 
 // Enable CORS
 app.UseCors("AllowSpecificOrigins");

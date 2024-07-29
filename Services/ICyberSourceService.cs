@@ -1,4 +1,6 @@
-﻿namespace CyberSourceIntegration.Services
+﻿using CyberSourceIntegration.Configurations;
+
+namespace CyberSourceIntegration.Services
 {
     public interface ICyberSourceService
     {
