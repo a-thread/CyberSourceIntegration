@@ -1,4 +1,4 @@
-using CyberSourceIntegration.Configurations;
+using CyberSourceIntegration.Models;
 using CyberSourceIntegration.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;

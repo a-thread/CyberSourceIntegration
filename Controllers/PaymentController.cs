@@ -1,5 +1,5 @@
 ﻿using CyberSourceIntegration.Services;
-using CyberSourceIntegration.Configurations;
+using CyberSourceIntegration.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CyberSourceIntegration.Controllers

@@ -1,4 +1,4 @@
-﻿using CyberSourceIntegration.Configurations;
+﻿using CyberSourceIntegration.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RestSharp;
@@ -6,6 +6,7 @@ using System;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace CyberSourceIntegration.Services
 {
@@ -61,10 +62,17 @@ namespace CyberSourceIntegration.Services
             var client = new RestClient(_settings.ApiUrl);
             var request = new RestRequest("pts/v2/payments", Method.Post);
 
-            var payload = new
+            var payload = new PaymentRequestPayload
             {
-                tokenInformation = new {
-                    transientTokenJwt = transientToken
+                ClientReferenceInformation = new ClientReferenceInformation
+                {
+                    Code = "test_payment",
+                   // Comments = comment // Add invoice numbers here
+                },
+                ProcessingInformation = new ProcessingInformation { CommerceIndicator = "internet" },
+                PaymentInformation = new PaymentInformation
+                {
+                    TokenizedCard = new TokenizedCard { TransientTokenJwt = transientToken }
                 },
             };
 

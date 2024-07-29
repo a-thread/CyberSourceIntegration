@@ -1,4 +1,4 @@
-﻿namespace CyberSourceIntegration.Configurations
+﻿namespace CyberSourceIntegration.Models
 {
     public class CyberSourceSettings
     {

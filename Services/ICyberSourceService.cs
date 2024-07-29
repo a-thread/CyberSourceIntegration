@@ -1,4 +1,4 @@
-﻿using CyberSourceIntegration.Configurations;
+﻿using CyberSourceIntegration.Models;
 
 namespace CyberSourceIntegration.Services
 {
